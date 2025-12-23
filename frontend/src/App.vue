@@ -1,12 +1,17 @@
 <template>
-  <div class="app">
+  <div>
+    <h1>🍷 Wines App</h1>
     <WinesView />
   </div>
 </template>
 
-<style>
-.app {
-  min-height: 100vh;
-  background: #f6f2f2;
-}
-</style>
+<script>
+import WinesView from "./views/WinesView.vue";
+
+export default {
+  name: "App",
+  components: {
+    WinesView,
+  },
+};
+</script>

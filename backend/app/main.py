@@ -1,19 +1,14 @@
 from fastapi import FastAPI
-from app.database import wines_collection
-from app.models import Wine
+from app.routes.wines import router as wines_router
+from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI(title="Wine Recommendation API")
+app = FastAPI(redirect_slashes=False)
 
-@app.get("/")
-def root():
-    return {"status": "Wine API is running"}
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-@app.post("/wines")
-def create_wine(wine: Wine):
-    wines_collection.insert_one(wine.dict())
-    return {"message": "Wine added successfully"}
-
-@app.get("/wines")
-def get_wines():
-    wines = list(wines_collection.find({}, {"_id": 0}))
-    return wines
+app.include_router(wines_router)

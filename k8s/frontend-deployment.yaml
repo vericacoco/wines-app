@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wines-frontend
+  namespace: wines
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wines-frontend
+  template:
+    metadata:
+      labels:
+        app: wines-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: vericachochorovska/wines-frontend:latest
+          ports:
+            - containerPort: 80
