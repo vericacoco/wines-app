@@ -3,15 +3,12 @@ kind: Ingress
 metadata:
   name: wines-ingress
   namespace: wines
-  annotations:
-    nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   ingressClassName: nginx
   rules:
     - host: wines.local
       http:
         paths:
-          # FRONTEND
           - path: /
             pathType: Prefix
             backend:
@@ -20,11 +17,10 @@ spec:
                 port:
                   number: 80
 
-          # BACKEND API
-          - path: /api(/|$)(.*)
+          - path: /api
             pathType: Prefix
             backend:
               service:
-                name: wines-backend
+                name: backend
                 port:
                   number: 8000

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>🍷 Wines App</h1>
+    <h1>🍷 Wines App - Form </h1>
     <WinesView />
   </div>
 </template>

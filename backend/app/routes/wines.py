@@ -6,7 +6,8 @@ from app.models import Wine
 router = APIRouter(prefix="/wines")
 
 
-@router.get("")
+
+@router.get("/")
 def get_wines(page: int = 1, limit: int = 5):
     skip = (page - 1) * limit
 
@@ -26,7 +27,7 @@ def get_wines(page: int = 1, limit: int = 5):
     }
 
 
-@router.post("")
+@router.post("/")
 def add_wine(wine: Wine):
     result = wines_collection.insert_one(wine.dict())
     return {

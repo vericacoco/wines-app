@@ -19,12 +19,32 @@ spec:
           image: mongo:6
           ports:
             - containerPort: 27017
-          envFrom:
-            - secretRef:
-                name: mongo-secret
+
           volumeMounts:
             - name: mongo-data
               mountPath: /data/db
+            - name: mongo-seed
+              mountPath: /seed
+
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - sh
+                  - -c
+                  - |
+                    echo "Waiting for MongoDB...";
+                    until mongosh mongodb://127.0.0.1:27017 --eval "db.adminCommand('ping')" >/dev/null 2>&1; do
+                      sleep 2;
+                    done;
+                    echo "Seeding MongoDB...";
+                    mongosh mongodb://127.0.0.1:27017/wines /seed/init-mongo.js
+
+      volumes:
+        - name: mongo-seed
+          configMap:
+            name: mongo-seed
+
   volumeClaimTemplates:
     - metadata:
         name: mongo-data

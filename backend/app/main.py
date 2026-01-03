@@ -2,7 +2,8 @@ from fastapi import FastAPI
 from app.routes.wines import router as wines_router
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI(redirect_slashes=False)
+app = FastAPI()
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -11,4 +12,4 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(wines_router)
+app.include_router(wines_router, prefix="/api")

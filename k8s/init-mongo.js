@@ -1,0 +1,25 @@
+db = db.getSiblingDB("wines");
+
+db.wines.insertMany([
+  {
+    name: "Cabernet Sauvignon",
+    country: "France",
+    type: "Red",
+    price: 20,
+    description: "Classic French red wine"
+  },
+  {
+    name: "Merlot",
+    country: "Italy",
+    type: "Red",
+    price: 18,
+    description: "Smooth Italian wine"
+  },
+  {
+    name: "Chardonnay",
+    country: "USA",
+    type: "White",
+    price: 15,
+    description: "Popular white wine"
+  }
+]);

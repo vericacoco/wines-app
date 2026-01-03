@@ -1,25 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wines-backend
+  name: backend
   namespace: wines
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: wines-backend
+      app: backend
   template:
     metadata:
       labels:
-        app: wines-backend
+        app: backend
     spec:
+      enableServiceLinks: false
       containers:
         - name: backend
-          image: vericachochorovska/wines-backend:latest
+          image: vericachochorovska/wines-backend:v3
           ports:
             - containerPort: 8000
           envFrom:
             - configMapRef:
                 name: backend-config
-            - secretRef:
-                name: mongo-secret

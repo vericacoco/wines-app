@@ -1,23 +1,15 @@
-from pymongo import MongoClient
 import os
-from urllib.parse import quote_plus
+from pymongo import MongoClient
 
-MONGO_HOST = os.getenv("MONGO_HOST", "mongo")
+MONGO_HOST = os.getenv("MONGO_HOST", "mongodb")
 MONGO_PORT = os.getenv("MONGO_PORT", "27017")
 MONGO_DB = os.getenv("MONGO_DB", "wines")
 
-MONGO_USER = os.getenv("MONGO_INITDB_ROOT_USERNAME")
-MONGO_PASSWORD = os.getenv("MONGO_INITDB_ROOT_PASSWORD")
+MONGO_URI = f"mongodb://{MONGO_HOST}:{MONGO_PORT}"
 
-if MONGO_USER and MONGO_PASSWORD:
-    username = quote_plus(str(MONGO_USER))
-    password = quote_plus(str(MONGO_PASSWORD))
-    mongo_url = f"mongodb://{username}:{password}@{MONGO_HOST}:{MONGO_PORT}/{MONGO_DB}"
-else:
-    mongo_url = f"mongodb://{MONGO_HOST}:{MONGO_PORT}/{MONGO_DB}"
+print(f"Mongo URI: {MONGO_URI}")
+print(f"Mongo DB: {MONGO_DB}")
 
-print("Mongo URL:", mongo_url)
-
-client = MongoClient(mongo_url)
+client = MongoClient(MONGO_URI)
 db = client[MONGO_DB]
 wines_collection = db["wines"]
